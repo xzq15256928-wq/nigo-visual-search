@@ -2,29 +2,33 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Visual Search - NIGO OFFICE</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,Arial,sans-serif;background:#f5f5f5;color:#333;min-height:100vh}
-.bar{background:#1a1a1a;display:flex;align-items:center;justify-content:space-between;padding:10px 16px}
+body{font-family:-apple-system,system-ui,sans-serif;background:#f5f5f5;color:#333;min-height:100vh;-webkit-tap-highlight-color:transparent}
+.bar{background:#1a1a1a;display:flex;align-items:center;justify-content:space-between;padding:12px 16px;position:sticky;top:0;z-index:10}
 .bar b{color:#D4AF37;font-size:15px;letter-spacing:2px}
-.bar a{color:#999;font-size:12px;text-decoration:none}
+.bar a{color:#999;font-size:13px;text-decoration:none}
 .wrap{max-width:1200px;margin:0 auto;padding:12px}
-.upload{background:#fff;border-radius:12px;padding:32px 16px;text-align:center;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
-.cam{width:56px;height:56px;background:#D4AF37;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
-.cam:active{transform:scale(.92)}
-.cam svg{width:28px;height:28px;fill:#fff}
-.upload p{color:#999;font-size:13px;margin-top:8px}
-#fi{display:none!important}
-.pv{display:none;background:#fff;border-radius:12px;padding:12px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.08);text-align:center}
-.pv img{max-height:120px;border-radius:8px}
-.pv .re{display:inline-block;margin-left:12px;color:#D4AF37;font-size:13px;cursor:pointer;vertical-align:bottom;line-height:120px}
+input[type=file]{display:none!important}
+.upload{background:#fff;border-radius:16px;padding:32px 20px;text-align:center;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.upload h2{font-size:16px;font-weight:600;margin-bottom:4px}
+.upload p{color:#999;font-size:13px;margin-bottom:20px}
+.btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{display:flex;align-items:center;gap:8px;padding:14px 28px;border-radius:12px;border:none;font-size:15px;font-weight:500;cursor:pointer;transition:transform .1s}
+.btn:active{transform:scale(.96)}
+.btn-cam{background:#D4AF37;color:#fff}
+.btn-gal{background:#f0f0f0;color:#333}
+.hint{color:#bbb;font-size:12px;margin-top:16px}
+.pv{display:none;background:#fff;border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06);text-align:center}
+.pv img{max-height:160px;max-width:100%;border-radius:12px;object-fit:contain}
+.pv .re{display:inline-block;margin-top:12px;color:#D4AF37;font-size:14px;cursor:pointer;padding:8px 20px;border:1px solid #D4AF37;border-radius:8px}
 #st{text-align:center;color:#999;font-size:13px;padding:8px 0}
 .spin{display:inline-block;width:16px;height:16px;border:2px solid #D4AF37;border-top-color:transparent;border-radius:50%;animation:sp .6s linear infinite;vertical-align:middle;margin-right:6px}
 @keyframes sp{to{transform:rotate(360deg)}}
 .g{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
-.c{background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.c{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
 .c a{text-decoration:none;color:#333}
 .c img{width:100%;aspect-ratio:1;object-fit:cover;background:#f0f0f0}
 .c .inf{padding:8px}
@@ -32,7 +36,7 @@ body{font-family:-apple-system,Arial,sans-serif;background:#f5f5f5;color:#333;mi
 .c .bot{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
 .c .sc{font-size:11px;color:#D4AF37;font-weight:bold}
 .c .lk{font-size:10px;color:#999}
-@media(max-width:500px){.g{grid-template-columns:repeat(2,1fr);gap:6px}.wrap{padding:8px}}
+@media(max-width:500px){.g{grid-template-columns:repeat(2,1fr);gap:6px}.wrap{padding:8px}.btn{padding:14px 20px;font-size:14px}}
 </style>
 </head>
 <body>
@@ -42,28 +46,33 @@ body{font-family:-apple-system,Arial,sans-serif;background:#f5f5f5;color:#333;mi
 </div>
 <div class="wrap">
   <div class="upload" id="dz">
-    <div class="cam" onclick="document.getElementById('fi').click()">
-      <svg viewBox="0 0 24 24"><path d="M12 15.2a3.2 3.2 0 100-6.4 3.2 3.2 0 000 6.4z"/><path d="M9 2L7.17 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2h-3.17L15 2H9z"/></svg>
+    <h2>📷 Find Similar Products</h2>
+    <p>Take a photo or upload from gallery</p>
+    <div class="btns">
+      <button class="btn btn-cam" onclick="fc.click()">📷 Camera</button>
+      <button class="btn btn-gal" onclick="fg.click()">🖼 Gallery</button>
     </div>
-    <p>Upload photo to find similar products</p>
-    <input type="file" id="fi" accept="image/*">
+    <p class="hint">Desktop: drag & drop or Ctrl+V paste</p>
+    <input type="file" id="fc" accept="image/*" capture="environment">
+    <input type="file" id="fg" accept="image/*">
   </div>
-  <div class="pv" id="pv"><img id="pi"><span class="re" onclick="reset()">✕</span></div>
+  <div class="pv" id="pv"><img id="pi"><br><span class="re" onclick="reset()">🔄 Search Again</span></div>
   <div id="st"></div>
   <div class="g" id="rs"></div>
 </div>
 <script>
 const C='https://cdn.staticsoe.com',S='https://www.nigooffice.com',A=location.origin+'/search';
-const dz=document.getElementById('dz'),fi=document.getElementById('fi');
+const dz=document.getElementById('dz'),fc=document.getElementById('fc'),fg=document.getElementById('fg');
 const pv=document.getElementById('pv'),pi=document.getElementById('pi');
 const st=document.getElementById('st'),rs=document.getElementById('rs');
 
-fi.onchange=e=>e.target.files[0]&&go(e.target.files[0]);
+fc.onchange=e=>e.target.files[0]&&go(e.target.files[0]);
+fg.onchange=e=>e.target.files[0]&&go(e.target.files[0]);
 dz.ondragover=e=>{e.preventDefault()};
 dz.ondrop=e=>{e.preventDefault();e.dataTransfer.files[0]&&go(e.dataTransfer.files[0])};
 document.onpaste=e=>{const f=[...(e.clipboardData?.items||[])].find(i=>i.type.startsWith('image/'));f&&go(f.getAsFile())};
 
-function reset(){pv.style.display='none';dz.style.display='block';rs.innerHTML='';st.textContent='';fi.value=''}
+function reset(){pv.style.display='none';dz.style.display='block';rs.innerHTML='';st.textContent='';fc.value='';fg.value=''}
 
 async function go(f){
   pi.src=URL.createObjectURL(f);
