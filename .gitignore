@@ -1,0 +1,4 @@
+node_modules/
+model.onnx
+vs-embeddings.bin
+vs-meta.json
