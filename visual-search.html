@@ -49,7 +49,7 @@ body{font-family:-apple-system,Arial,sans-serif;background:#f5f5f5;color:#333;mi
       <svg viewBox="0 0 24 24"><path d="M12 15.2a3.2 3.2 0 100-6.4 3.2 3.2 0 000 6.4z"/><path d="M9 2L7.17 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2h-3.17L15 2H9z"/></svg>
     </div>
     <p>Tap to upload · Drop · Ctrl+V</p>
-    <input type="file" id="fi" accept="image/*" capture="environment">
+    <input type="file" id="fi" accept="image/*" style="display:none">
   </div>
   <div class="examples" id="ex">
     <p>Or try an example:</p>
@@ -66,11 +66,11 @@ const st=document.getElementById('st'),rs=document.getElementById('rs'),ex=docum
 
 // 5 example product images from CDN
 const samples=[
-  '/upload/40596/product/2025-01/17369082131.jpg',
-  '/upload/40596/product/2025-01/17369082132.jpg',
-  '/upload/40596/product/2024-12/17356776561.jpg',
-  '/upload/40596/product/2024-12/17356776562.jpg',
-  '/upload/40596/product/2025-01/17369082133.jpg'
+  '/uploader/1c542ed147288daf804745569f009c093f6e52f34beea5655cc3db689ad1531b.jpg',
+  '/uploads/40596/cart/resources/20260203/479ACE45-EF78-97B8-0A2B-D347A4E3CC61.jpg',
+  '/uploads/40596/cart/resources/20260127/52290521-1D4F-DC7C-5AA9-13B4953592CA.jpg',
+  '/uploads/40596/cart/resources/20260124/50CA5EBC-D7FD-DB3D-C922-E3399527FE62.jpg',
+  '/uploads/40596/cart/resources/20260120/fc5fbbc41c41029e39b254ba2bffa2c3.jpg'
 ];
 samples.forEach(s=>{
   const img=document.createElement('img');
