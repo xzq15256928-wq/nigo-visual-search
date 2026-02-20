@@ -11,21 +11,18 @@ body{font-family:-apple-system,Arial,sans-serif;background:#f5f5f5;color:#333;mi
 .bar b{color:#D4AF37;font-size:15px;letter-spacing:2px}
 .bar a{color:#999;font-size:12px;text-decoration:none}
 .wrap{max-width:1200px;margin:0 auto;padding:12px}
-.upload{background:#fff;border-radius:12px;padding:28px 16px;text-align:center;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
-.cam{width:56px;height:56px;background:#D4AF37;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .15s}
+.upload{background:#fff;border-radius:12px;padding:32px 16px;text-align:center;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.cam{width:56px;height:56px;background:#D4AF37;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
 .cam:active{transform:scale(.92)}
 .cam svg{width:28px;height:28px;fill:#fff}
 .upload p{color:#999;font-size:13px;margin-top:8px}
+#fi{display:none!important}
 .pv{display:none;background:#fff;border-radius:12px;padding:12px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.08);text-align:center}
 .pv img{max-height:120px;border-radius:8px}
 .pv .re{display:inline-block;margin-left:12px;color:#D4AF37;font-size:13px;cursor:pointer;vertical-align:bottom;line-height:120px}
 #st{text-align:center;color:#999;font-size:13px;padding:8px 0}
 .spin{display:inline-block;width:16px;height:16px;border:2px solid #D4AF37;border-top-color:transparent;border-radius:50%;animation:sp .6s linear infinite;vertical-align:middle;margin-right:6px}
 @keyframes sp{to{transform:rotate(360deg)}}
-.examples{text-align:center;margin-bottom:12px}
-.examples p{color:#bbb;font-size:12px;margin-bottom:8px}
-.examples img{width:64px;height:64px;object-fit:cover;border-radius:8px;margin:0 4px;cursor:pointer;border:2px solid transparent;transition:border-color .15s}
-.examples img:hover{border-color:#D4AF37}
 .g{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
 .c{background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
 .c a{text-decoration:none;color:#333}
@@ -35,24 +32,21 @@ body{font-family:-apple-system,Arial,sans-serif;background:#f5f5f5;color:#333;mi
 .c .bot{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
 .c .sc{font-size:11px;color:#D4AF37;font-weight:bold}
 .c .lk{font-size:10px;color:#999}
-@media(max-width:500px){.g{grid-template-columns:repeat(2,1fr);gap:6px}.wrap{padding:8px}.examples img{width:52px;height:52px}}
+@media(max-width:500px){.g{grid-template-columns:repeat(2,1fr);gap:6px}.wrap{padding:8px}}
 </style>
 </head>
 <body>
 <div class="bar">
   <b>NIGO OFFICE</b>
-  <a href="https://www.nigooffice.com">← Back to Shop</a>
+  <a href="https://www.nigooffice.com">← Shop</a>
 </div>
 <div class="wrap">
   <div class="upload" id="dz">
     <div class="cam" onclick="document.getElementById('fi').click()">
       <svg viewBox="0 0 24 24"><path d="M12 15.2a3.2 3.2 0 100-6.4 3.2 3.2 0 000 6.4z"/><path d="M9 2L7.17 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2h-3.17L15 2H9z"/></svg>
     </div>
-    <p>Tap to upload · Drop · Ctrl+V</p>
-    <input type="file" id="fi" accept="image/*" style="display:none">
-  </div>
-  <div class="examples" id="ex">
-    <p>Or try an example:</p>
+    <p>Upload photo to find similar products</p>
+    <input type="file" id="fi" accept="image/*">
   </div>
   <div class="pv" id="pv"><img id="pi"><span class="re" onclick="reset()">✕</span></div>
   <div id="st"></div>
@@ -62,36 +56,18 @@ body{font-family:-apple-system,Arial,sans-serif;background:#f5f5f5;color:#333;mi
 const C='https://cdn.staticsoe.com',S='https://www.nigooffice.com',A=location.origin+'/search';
 const dz=document.getElementById('dz'),fi=document.getElementById('fi');
 const pv=document.getElementById('pv'),pi=document.getElementById('pi');
-const st=document.getElementById('st'),rs=document.getElementById('rs'),ex=document.getElementById('ex');
-
-// 5 example product images from CDN
-const samples=[
-  '/uploader/1c542ed147288daf804745569f009c093f6e52f34beea5655cc3db689ad1531b.jpg',
-  '/uploads/40596/cart/resources/20260203/479ACE45-EF78-97B8-0A2B-D347A4E3CC61.jpg',
-  '/uploads/40596/cart/resources/20260127/52290521-1D4F-DC7C-5AA9-13B4953592CA.jpg',
-  '/uploads/40596/cart/resources/20260124/50CA5EBC-D7FD-DB3D-C922-E3399527FE62.jpg',
-  '/uploads/40596/cart/resources/20260120/fc5fbbc41c41029e39b254ba2bffa2c3.jpg'
-];
-samples.forEach(s=>{
-  const img=document.createElement('img');
-  img.src=C+s+'?x-oss-process=image/format,webp/resize,w_128';
-  img.onclick=async()=>{
-    st.innerHTML='<span class="spin"></span>Loading example...';
-    const r=await fetch(C+s);const b=await r.blob();go(b);
-  };
-  ex.appendChild(img);
-});
+const st=document.getElementById('st'),rs=document.getElementById('rs');
 
 fi.onchange=e=>e.target.files[0]&&go(e.target.files[0]);
 dz.ondragover=e=>{e.preventDefault()};
 dz.ondrop=e=>{e.preventDefault();e.dataTransfer.files[0]&&go(e.dataTransfer.files[0])};
 document.onpaste=e=>{const f=[...(e.clipboardData?.items||[])].find(i=>i.type.startsWith('image/'));f&&go(f.getAsFile())};
 
-function reset(){pv.style.display='none';dz.style.display='block';ex.style.display='block';rs.innerHTML='';st.textContent='';fi.value=''}
+function reset(){pv.style.display='none';dz.style.display='block';rs.innerHTML='';st.textContent='';fi.value=''}
 
 async function go(f){
   pi.src=URL.createObjectURL(f);
-  pv.style.display='block';dz.style.display='none';ex.style.display='none';
+  pv.style.display='block';dz.style.display='none';
   rs.innerHTML='';
   const t0=Date.now();
   st.innerHTML='<span class="spin"></span>Searching 10,000+ products...';
@@ -105,7 +81,7 @@ async function go(f){
       const img=(i.img.startsWith('http')?i.img:C+i.img)+'?x-oss-process=image/format,webp/resize,w_300';
       return`<div class="c"><a href="${S}/products/${i.handle}" target="_blank"><img src="${img}" loading="lazy"><div class="inf"><div class="tt">${i.title}</div><div class="bot"><span class="sc">${i.score}%</span><span class="lk">View →</span></div></div></a></div>`
     }).join('');
-  }catch(e){st.textContent='❌ '+e.message+' (server may be waking up, retry in 30s)'}
+  }catch(e){st.textContent='❌ '+e.message+' — server may be waking up, retry in 30s'}
 }
 </script>
 </body>
